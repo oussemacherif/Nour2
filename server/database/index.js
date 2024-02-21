@@ -1,7 +1,7 @@
 const config = require("./config.js");
 const { Sequelize,DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(
+const connection = new Sequelize(
   config.database,
   config.user,
   config.password,
@@ -10,9 +10,14 @@ const sequelize = new Sequelize(
     dialect: "mysql",
   }
 );
+const db={}
+
+db.connection=connection
+db.Sequelize=Sequelize
+db.Users = require ('./models/users.js')(connection,DataTypes)
 
 
-const Test = sequelize.define('test', {
+const Test = connection.define('test', {
  
   name: { 
     type: DataTypes.STRING,
@@ -20,7 +25,8 @@ const Test = sequelize.define('test', {
   },
 })
 
-sequelize.authenticate() 
+
+connection.authenticate() 
   .then(() => {
     console.log('Database connection has been established successfully.'); 
   })
@@ -30,14 +36,13 @@ sequelize.authenticate()
 
 
   
-//   sequelize.sync()
-//   .then(() => {
-//     console.log('Database and tables synchronized.');
-//   })
-//   .catch((error) => { 
-//     console.error('Error synchronizing the database:', error);
-//   });
+  // connection.sync()
+  // .then(() => {
+  //   console.log('Database and tables synchronized.');
+  // })
+  // .catch((error) => { 
+  //   console.error('Error synchronizing the database:', error);
+  // });
 
 
-module.exports = {
-  Test}
+module.exports = {Test}
