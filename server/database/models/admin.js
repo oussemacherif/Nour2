@@ -1,10 +1,10 @@
-const Users = (connection, DataTypes) => {
-    return connection.define("users", {
-      fname: {
+const Admin = (connection, DataTypes) => {
+    return connection.define("admin", {
+      admin_fname: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lname: {
+      admin_lname: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -13,11 +13,15 @@ const Users = (connection, DataTypes) => {
         allowNull: false,
         unique: true,
       },
-      user_password: {
+      admin_password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      admin_image:{
+        type:DataTypes.JSON,
+        allowNull:false
+      }
     });
   };
   
-  module.exports = Users;
+  module.exports = Admin;
