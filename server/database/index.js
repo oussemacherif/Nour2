@@ -14,16 +14,21 @@ const db={}
 
 db.connection=connection
 db.Sequelize=Sequelize
-db.Users = require ('./models/users.js')(connection,DataTypes)
+db.UsersBf = require ('./models/usersbf.js')(connection,DataTypes)
+db.UsersAf = require ('./models/usersaf.js')(connection,DataTypes)
+db.Admin = require ('./models/admin.js')(connection,DataTypes)
+db.Payment = require ('./models/payment.js')(connection,DataTypes)
+db.HousingInfo = require ('./models/housinginfo.js')(connection,DataTypes)
+db.Rooms = require ('./models/rooms.js')(connection,DataTypes)
 
 
-const Test = connection.define('test', {
+// const Test = connection.define('test', {
  
-  name: { 
-    type: DataTypes.STRING,
-    allowNull : false,
-  },
-})
+//   name: { 
+//     type: DataTypes.STRING,
+//     allowNull : false,
+//   },
+// })
 
 
 connection.authenticate() 
@@ -45,4 +50,4 @@ connection.authenticate()
   // });
 
 
-module.exports = {Test}
+module.exports = db
