@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./database/index");
 const Routes = require("./routes/test");
+const usersbfRoute = require("./routes/usersbf.routes");
 
 
 
@@ -17,7 +18,7 @@ app.use(cors())
 
 
 app.use("/get",Routes);
-
+app.use("/nour2",usersbfRoute)
 
 
 
