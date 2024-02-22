@@ -2,7 +2,10 @@ const {UsersBf}=require("../database/index")
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-
+const GiveMeToken=(userId,Name)=>{
+   return jwt.sign({userId,Name},process.env.ACCESS_TOKEN_SECRET,{ expiresIn:60*60*24*7})
+    
+}
 const AllUsers= async(req,res) => {
     try {
     const result=await UsersBf.findAll()
@@ -14,15 +17,42 @@ const AllUsers= async(req,res) => {
 
 const OneUsers= async(req,res) => {
     try {
-    const result=await UsersBf.findOne({where:{id:req.body.id}})
+    const result=await UsersBf.findOne({where:{id:req.params.id}})
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
+const LoginUser = async(req,res)=>{
+    const {user_password,email}=req.body
+    try {
+        const correctUserEmail=await UsersBf.findOne({where:{email:req.body.email}})
+        if(!correctUserEmail){
+           return res.status(405).json("email not found")
+        }
+        else {
+            const password=correctUserEmail.dataValues.user_password
+            const verifpassword=await bcrypt.compare(user_password,password)
+            if (!verifpassword) {
+                return res.status(406).json("wrong password")
+            }
+            else {
+                const userId=correctUserEmail.dataValues.id
+                const Name=correctUserEmail.dataValues.lname
+                return res.json({
+                    id:userId,
+                    token:GiveMeToken(userId,Name)
+                })
+            }
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}
+
 const CreateUser =async (req, res) =>{
-    const {fname,lname,user_password,email,doc1,doc2,doc3,doc4}=req.body
+    const {fname,lname,user_password,email,doc1,doc2,doc3,doc4,status}=req.body
     console.log("req",req.body);
       try {
         const hashedPassword = await bcrypt.hash(user_password, 10);
@@ -34,6 +64,7 @@ const CreateUser =async (req, res) =>{
         doc2,
         doc3,
         doc4,
+        status,
         user_password:hashedPassword,
 
        }
@@ -69,4 +100,4 @@ const UpdateUser= async (req,res)=>{
 }
 
 
-module.exports={CreateUser,OneUsers,AllUsers,UpdateUser}
+module.exports={CreateUser,OneUsers,AllUsers,UpdateUser,DeleteUser,LoginUser}
