@@ -36,6 +36,10 @@ const UsersBF = (connection, DataTypes) => {
        status:{
         type: DataTypes.ENUM,
         values: ['pending', 'not accepted']
+       },
+       comment:{
+        type:DataTypes.TEXT("long"),
+        allowNull:true
        }
 
     });

@@ -1,4 +1,4 @@
-const {UsersBf}=require("../database/index")
+const {UsersAf}=require("../database/index")
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -7,28 +7,28 @@ const GiveMeToken=(userId,Name)=>{
     
 }
 
-const AllUsers= async(req,res) => {
+const AllUsersAcp= async(req,res) => {
     try {
-    const result=await UsersBf.findAll()
+    const result=await UsersAf.findAll()
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
-const OneUsers= async(req,res) => {
+const OneUsersAcp= async(req,res) => {
     try {
-    const result=await UsersBf.findOne({where:{id:req.params.id}})
+    const result=await UsersAf.findOne({where:{id:req.params.id}})
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
-const LoginUser = async(req,res)=>{
+const LoginUserAcp = async(req,res)=>{
     const {user_password,email}=req.body
     try {
-        const correctUserEmail=await UsersBf.findOne({where:{email:req.body.email}})
+        const correctUserEmail=await UsersAf.findOne({where:{email:req.body.email}})
         if(!correctUserEmail){
            return res.status(405).json("email not found")
         }
@@ -52,7 +52,7 @@ const LoginUser = async(req,res)=>{
     }
 }
 
-const CreateUser =async (req, res) =>{
+const CreateUserAcp =async (req, res) =>{
     const {fname,lname,user_password,email,doc1,doc2,doc3,doc4,status}=req.body
     console.log("req",req.body);
       try {
@@ -69,23 +69,23 @@ const CreateUser =async (req, res) =>{
         user_password:hashedPassword,
 
        }
-        const newUser = await UsersBf.create(userHashed);
+        const newUser = await UsersAf.create(userHashed);
         res.status(201).send(newUser);
       } catch (error) {
         res.status(400).json(error);
       }
     }
 
-const DeleteUser= async(req,res) => {
+const DeleteUserAcp= async(req,res) => {
         try {
-        const result=await UsersBf.destroy({where:req.params})
+        const result=await UsersAf.destroy({where:req.params})
         res.json(result)   
         } catch (error) {
         res.send(error)    
         }
 };
 
-const UpdateUser= async (req,res)=>{
+const UpdateUserAcp= async (req,res)=>{
     try {
         if(req.body.newpassword){
             const hashedPassword = await bcrypt.hash(req.body.newpassword, 10);
@@ -93,7 +93,7 @@ const UpdateUser= async (req,res)=>{
         }
         console.log(req.body);
         
-        const result=await UsersBf.update(req.body,{where:{id:req.params.id}})
+        const result=await UsersAf.update(req.body,{where:{id:req.params.id}})
         res.json(result)
     } catch (error) {
         res.send(error)
@@ -101,4 +101,4 @@ const UpdateUser= async (req,res)=>{
 }
 
 
-module.exports={CreateUser,OneUsers,AllUsers,UpdateUser,DeleteUser,LoginUser}
+module.exports={CreateUserAcp,OneUsersAcp,AllUsersAcp,UpdateUserAcp,DeleteUserAcp,LoginUserAcp}
