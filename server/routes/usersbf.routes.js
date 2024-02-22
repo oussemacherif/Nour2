@@ -1,12 +1,15 @@
 const usersbfRoute=require('express').Router()
-const {CreateUser,AllUsers,OneUsers,UpdateUser}=require('../controllers/usersbf.controllers')
+const {CreateUser,AllUsers,OneUsers,UpdateUser,DeleteUser,LoginUser}=require('../controllers/usersbf.controllers')
 
 
-// usersbfRoute.get('/allUsers',AllLF)
-// usersbfRoute.get('/OneUser',AllAdp)
+usersbfRoute.get('/AllUsers',AllUsers)
+usersbfRoute.get('/OneUser/:id',OneUsers)
 
 usersbfRoute.post('/CreateUser',CreateUser)
+usersbfRoute.post('/Login',LoginUser)
+
 usersbfRoute.put('/Update/:id',UpdateUser)
-// usersbfRoute.delete('/LFA/:id',DeleteLFA)
+
+usersbfRoute.delete('/Delete/:id',DeleteUser)
 
 module.exports=usersbfRoute

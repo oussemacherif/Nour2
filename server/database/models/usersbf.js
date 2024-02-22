@@ -33,6 +33,10 @@ const UsersBF = (connection, DataTypes) => {
         type: DataTypes.JSON,
         allowNull:false
        },
+       status:{
+        type: DataTypes.ENUM,
+        values: ['pending', 'not accepted']
+       }
 
     });
   };
