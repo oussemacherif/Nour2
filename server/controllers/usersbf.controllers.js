@@ -55,11 +55,18 @@ const DeleteUser= async(req,res) => {
 
 const UpdateUser= async (req,res)=>{
     try {
+        if(req.body.newpassword){
+            const hashedPassword = await bcrypt.hash(req.body.newpassword, 10);
+            req.body.user_password=hashedPassword 
+        }
+        console.log(req.body);
+        
         const result=await UsersBf.update(req.body,{where:{id:req.params.id}})
+        res.json(result)
     } catch (error) {
         
     }
 }
 
 
-module.exports={CreateUser,OneUsers,AllUsers}
+module.exports={CreateUser,OneUsers,AllUsers,UpdateUser}
