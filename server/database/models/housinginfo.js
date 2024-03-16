@@ -4,10 +4,6 @@ const Houinfo = (connection, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      h_owner: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       h_email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -27,6 +23,10 @@ const Houinfo = (connection, DataTypes) => {
       },
       h_nidhamda5ili :{
         type:DataTypes.TEXT("long")
+      },
+      h_RIB :{
+        type:DataTypes.STRING,
+        allowNull:true
       }
     });
   };

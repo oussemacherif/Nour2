@@ -17,30 +17,42 @@ const UsersBF = (connection, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      doc1: {
+      photo :{
+        type:DataTypes.JSON,
+        allowNull:false
+      },
+      waslt_tarssim: {
         type:DataTypes.JSON,
         allowNull:false,
       },
-      doc2:{
+      chahadet_i9ama:{
        type: DataTypes.JSON,
        allowNull:false
       },
-      doc3:{
+      CIN:{
         type: DataTypes.JSON,
         allowNull:false
        },
-       doc4:{
+       Chhada_tebiya:{
         type: DataTypes.JSON,
         allowNull:false
+       },
+       wassl_5alass :{
+        type: DataTypes.JSON,
+        allowNull:false
+       },
+       msgwithreq:{
+        type:DataTypes.TEXT("long"),
+        allowNull:true
        },
        status:{
         type: DataTypes.ENUM,
         values: ['pending', 'not accepted']
        },
-       comment:{
+       reasons:{
         type:DataTypes.TEXT("long"),
         allowNull:true
-       }
+       },
 
     });
   };

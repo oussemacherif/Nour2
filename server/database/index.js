@@ -20,15 +20,25 @@ db.Admin = require ('./models/admin.js')(connection,DataTypes)
 db.Payment = require ('./models/payment.js')(connection,DataTypes)
 db.HousingInfo = require ('./models/housinginfo.js')(connection,DataTypes)
 db.Rooms = require ('./models/rooms.js')(connection,DataTypes)
+db.Reservation = require ('./models/reservation.js')(connection,DataTypes)
+db.InstructionCard = require ('./models/instructionCard(بطاقة إرشادات).js')(connection,DataTypes)
 
 
-// const Test = connection.define('test', {
- 
-//   name: { 
-//     type: DataTypes.STRING,
-//     allowNull : false,
-//   },
-// })
+//<------------------------------------  Relations  ---------------------------------------->//
+/// Relation between users Before and Intruction Card 1:1
+db.UsersBf.hasOne(db.InstructionCard) 
+db.InstructionCard.belongsTo(db.UsersBf)
+
+/// Relation between users After and Reservation 1:1
+db.UsersAf.hasOne(db.Reservation) 
+db.Reservation.belongsTo(db.UsersAf)
+
+/// Realtion between Rooms and Reservation 1:n
+db.Rooms.hasMany(db.Reservation)
+db.Reservation.belongsTo(db.Rooms)
+
+
+
 
 
 connection.authenticate() 
@@ -41,13 +51,13 @@ connection.authenticate()
 
 
   
-  // connection.sync()
-  // .then(() => {
-  //   console.log('Database and tables synchronized.');
-  // })
-  // .catch((error) => { 
-  //   console.error('Error synchronizing the database:', error);
-  // });
+  connection.sync()
+  .then(() => {
+    console.log('Database and tables synchronized.');
+  })
+  .catch((error) => { 
+    console.error('Error synchronizing the database:', error);
+  });
 
 
 module.exports = db

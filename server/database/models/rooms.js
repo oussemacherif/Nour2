@@ -16,16 +16,6 @@ const Rooms = (connection, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      reserved:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false,
-      },
-      reservedAt:{
-        type:DataTypes.DATE,
-        allowNull:false,
-      }
-      
-
     });
   };
   
